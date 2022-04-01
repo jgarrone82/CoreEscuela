@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CoreEscuela.Entities
 {
-    public class Student
+    public class Student:BaseSchoolObj
     {
          //public List<Evaluación> Evaluaciones { get; set; } = new List<Evaluación>();
     }

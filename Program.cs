@@ -1,6 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using CoreEscuela.App;
 using CoreEscuela.Entities;
+using CoreEscuela.Util;
 
-var school = new School("George's Institute", 2010,SchoolType.High,"Argentina","Córdoba","2372 San Javier Street");
+var engine = new SchoolEngine();
+engine.Inicialize();
 
-Console.WriteLine(school);
+//var school = new School("George's Institute", 2010,SchoolType.High,"Argentina","Córdoba","2372 San Javier Street");
+
+
+Printer.WriteTitle("Welcome to the School!");
+Console.WriteLine(engine.School);
