@@ -5,16 +5,26 @@ using System.Threading.Tasks;
 
 namespace CoreEscuela.Entities
 {
-    public class Exam:BaseSchoolObj
+    public class Exam : BaseSchoolObj
     {
         public Student Student { get; set; }
-        public Course Courses { get; set; }
+        public Course Course { get; set; }
         public float Note { get; set; }
+
+        public Exam()
+        {
+            Course = new Course();
+            Name = $"Name";
+            Note = 0.0f;
+            Student = new Student();
+        }
+
+
 
         public override string ToString()
         {
-            //return $"{Note}, {Student.Name}, {Course.Name}";
-            return $"{Note}, {Student.Name}";
+            return $"Course: {Course.Name}, Student: {Student.Name}, Note: {Note}";
         }
+
     }
 }

@@ -12,23 +12,17 @@ namespace CoreEscuela.Entities
         public string City { get; set; }
         public string Address { get; set; }
         public SchoolType SchoolType { get; set; }
-        //public List<Grade> grades { set; get; }
-        public School(string country, string city, string address)
-        {
-            this.Country = country;
-            this.City = city;
-            this.Address = address;
-        }
-
+        public List<Grade> Grades { set; get; }
         public School(string name, int year,
                        SchoolType type,
                        string country = "", string city = "",
-                       string address = "") : base()
+                       string address = "" ) : base()
         {
             (Name, YearOfCreation, SchoolType) = (name, year, type);
             Country = country;
             City = city;
             Address = address;
+            //Grades = grades;
         }
         //public School(string name, int year) => (City, YearOfCreation) = (name, year);
 

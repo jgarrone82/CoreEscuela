@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreEscuela.Util;
 
 namespace CoreEscuela.Entities
 {
@@ -10,12 +11,10 @@ namespace CoreEscuela.Entities
         public HourTypes HourType { get; set; }
         public List<Course> Courses{ get; set; }
         public List<Student> Students{ get; set; }
-        //public string Address { get; set; }
-
-
+                
         public void LimpiarLugar()
         {
-            //Printer.DibujarLinea();
+            Printer.DrawLine();
             Console.WriteLine("Limpiando Establecimiento...");
             Console.WriteLine($"Curso {Name} Limpio");
         }

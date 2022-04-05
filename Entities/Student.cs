@@ -7,6 +7,6 @@ namespace CoreEscuela.Entities
 {
     public class Student:BaseSchoolObj
     {
-         //public List<Evaluación> Evaluaciones { get; set; } = new List<Evaluación>();
+         public List<Exam> Exams { get; set; } = new List<Exam>();
     }
 }
