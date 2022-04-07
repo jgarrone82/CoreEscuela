@@ -6,12 +6,12 @@ using CoreEscuela.Entities;
 
 namespace CoreEscuela.App
 {
-    public class SchoolEngine
+    public sealed class SchoolEngine
     {
-        public School School { get; set; }
+        public School School { get; set; } 
         public SchoolEngine()
         {
-            
+           
         }
 
         public void Inicialize()

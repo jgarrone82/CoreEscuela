@@ -12,7 +12,7 @@ namespace CoreEscuela.Entities
         public string City { get; set; }
         public string Address { get; set; }
         public SchoolType SchoolType { get; set; }
-        public List<Grade> Grades { set; get; }
+        public List<Grade> Grades { set; get; } = new List<Grade>();
         public School(string name, int year,
                        SchoolType type,
                        string country = "", string city = "",
