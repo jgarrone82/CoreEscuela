@@ -2,11 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreEscuela.Util;
 
 namespace CoreEscuela.Entities
 {
-    public class School : BaseSchoolObj
+    public class School : BaseSchoolObj, IPlace
     {
+        public School(int yearOfCreation, SchoolType schoolType
+                ,string country = "", string city = "", string address = "") 
+        {
+            this.YearOfCreation = yearOfCreation;            
+            this.SchoolType = schoolType;
+            this.Address = address;
+            this.City = city;            
+            this.Country = country;   
+        }
         public int YearOfCreation { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
@@ -31,5 +41,18 @@ namespace CoreEscuela.Entities
             return $"Name: \"{Name}\"{System.Environment.NewLine}Adress: {Address}, Type: {SchoolType} {System.Environment.NewLine}City:{City}, Country: {Country}";
         }
 
+        public void CleanPlace()
+        {
+            Printer.DrawLine();
+            Console.WriteLine("Cleaning School..");
+            
+            foreach (var grade in Grades)
+            {
+                grade.CleanPlace();
+            }
+            
+            Printer.WriteTitle($"School {Name} clean");
+            //Printer.Beep(1000, amount:3);
+        }
     }
 }

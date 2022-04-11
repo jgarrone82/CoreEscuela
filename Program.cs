@@ -10,3 +10,5 @@ engine.Inicialize();
 
 Printer.WriteTitle("Welcome to the School!");
 Console.WriteLine(engine.School);
+
+engine.School.CleanPlace();
