@@ -23,6 +23,51 @@ namespace CoreEscuela.App
             LoadExams();
         }
 
+        public IReadOnlyList<BaseSchoolObj> GetSchoolObjects(
+            out int countExams,
+            out int countGrades,
+            out int countCourses,
+            out int countStundents,
+            bool getExams = true,
+            bool getStudents = true,
+            bool getCourses = true,
+            bool getGrades = true
+            )
+        {
+            countStundents = countCourses = countExams = 0;
+
+            var objList = new List<BaseSchoolObj>();
+            objList.Add(School);
+
+            if (getGrades)
+                objList.AddRange(School.Grades);
+
+            countGrades = School.Grades.Count;
+            foreach (var grade in School.Grades)
+            {
+                countCourses += grade.Courses.Count;
+                countStundents += grade.Students.Count;
+
+                if (getCourses)
+                    objList.AddRange(grade.Courses);
+
+                if (getStudents)
+                    objList.AddRange(grade.Students);
+
+                if (getExams)
+                {
+                    foreach (var student in grade.Students)
+                    {
+
+                        objList.AddRange(student.Exams);
+                        countExams += student.Exams.Count;
+                    }
+                }
+            }
+
+            return objList.AsReadOnly();
+        }
+
         #region Loading Methods
 
         private void LoadGrades()
