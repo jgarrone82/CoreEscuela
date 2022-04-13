@@ -11,7 +11,7 @@ namespace CoreEscuela.Entities
         public HourTypes HourType { get; set; }
         public List<Course> Courses{ get; set; } = new List<Course>();
         public List<Student> Students{ get; set; } = new List<Student>();
-        public string Address { get; set; }
+        public string Address { get; set; } = "";
 
         public void CleanPlace()
         {

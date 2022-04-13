@@ -11,7 +11,7 @@ namespace CoreEscuela.App
         public School School { get; set; } 
         public SchoolEngine()
         {
-           
+            
         }
 
         public void Inicialize()
@@ -23,18 +23,28 @@ namespace CoreEscuela.App
             LoadExams();
         }
 
+        public Dictionary<string, IEnumerable<BaseSchoolObj> > GetObjetDict()
+        {
+            var dictionary = new Dictionary<string, IEnumerable<BaseSchoolObj> >();
+
+            dictionary.Add("School", new [] {School});
+            dictionary.Add("Grades", School.Grades.Cast<BaseSchoolObj>());           
+
+            return dictionary;
+        }
+
         public IReadOnlyList<BaseSchoolObj> GetSchoolObjects(
             out int countExams,
             out int countGrades,
             out int countCourses,
-            out int countStundents,
+            out int countStudents,
             bool getExams = true,
             bool getStudents = true,
             bool getCourses = true,
             bool getGrades = true
             )
         {
-            countStundents = countCourses = countExams = 0;
+            countStudents = countCourses = countExams = 0;
 
             var objList = new List<BaseSchoolObj>();
             objList.Add(School);
@@ -46,7 +56,7 @@ namespace CoreEscuela.App
             foreach (var grade in School.Grades)
             {
                 countCourses += grade.Courses.Count;
-                countStundents += grade.Students.Count;
+                countStudents += grade.Students.Count;
 
                 if (getCourses)
                     objList.AddRange(grade.Courses);
