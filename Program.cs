@@ -21,4 +21,6 @@ var objectList = engine.GetSchoolObjects(
 
 var objetDict = engine.GetObjetDict();
 
+engine.PrintDictionary(objetDict);
+
 Console.ReadLine();

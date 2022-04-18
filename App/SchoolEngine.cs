@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreEscuela.Entities;
+using CoreEscuela.Util;
 
 namespace CoreEscuela.App
 {
@@ -23,14 +24,72 @@ namespace CoreEscuela.App
             LoadExams();
         }
 
-        public Dictionary<string, IEnumerable<BaseSchoolObj> > GetObjetDict()
+        public Dictionary<keyDictionary, IEnumerable<BaseSchoolObj> > GetObjetDict()
         {
-            var dictionary = new Dictionary<string, IEnumerable<BaseSchoolObj> >();
+            var dictionary = new Dictionary<keyDictionary, IEnumerable<BaseSchoolObj> >();
 
-            dictionary.Add("School", new [] {School});
-            dictionary.Add("Grades", School.Grades.Cast<BaseSchoolObj>());           
+            dictionary.Add(keyDictionary.School, new [] {School});
+            dictionary.Add(keyDictionary.Grade, School.Grades.Cast<BaseSchoolObj>());  
+            
+            var listCourse = new List<Course>();
+            var listStudent = new List<Student>();
+            var listExam = new List<Exam>();
+
+            foreach (var cur in School.Grades)
+            {
+                listCourse.AddRange(cur.Courses);
+                listStudent.AddRange(cur.Students);
+
+                foreach (var alum in cur.Students)
+                {
+                    listExam.AddRange(alum.Exams);
+                }
+
+            }
+            
+            dictionary.Add(keyDictionary.Course, listCourse.Cast<BaseSchoolObj>());
+            dictionary.Add(keyDictionary.Student, listStudent.Cast<BaseSchoolObj>());
+            dictionary.Add(keyDictionary.Exam, listExam.Cast<BaseSchoolObj>());
+                   
 
             return dictionary;
+        }
+
+        public void PrintDictionary(Dictionary<keyDictionary, IEnumerable<BaseSchoolObj>> dic,
+                        bool printEval = false)
+        {
+            foreach (var objdic in dic)
+            {
+                Printer.WriteTitle(objdic.Key.ToString());
+
+                foreach (var val in objdic.Value)
+                {
+                    switch (objdic.Key)
+                    {
+                        case keyDictionary.School:
+                            Console.WriteLine("School: " + val);
+                            break;
+                        case keyDictionary.Student:
+                            Console.WriteLine("Student: " + val.Name);
+                            break;
+                        case keyDictionary.Grade:
+                            var curtmp = val as Grade;
+                            if(curtmp != null)
+                            {
+                                int count = curtmp.Students.Count;
+                                Console.WriteLine("Grade: " + val.Name + " Amount of Students: " + count);
+                            }
+                            break;
+                        case keyDictionary.Exam:
+                            if (printEval)
+                                Console.WriteLine(val);
+                            break;
+                        default:
+                            Console.WriteLine(val);
+                            break;
+                    }
+                }
+            }
         }
 
         public IReadOnlyList<BaseSchoolObj> GetSchoolObjects(
