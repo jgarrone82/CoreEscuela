@@ -73,10 +73,10 @@ namespace CoreEscuela.App
                             Console.WriteLine("Student: " + val.Name);
                             break;
                         case keyDictionary.Grade:
-                            var curtmp = val as Grade;
-                            if(curtmp != null)
+                            var gradeTmp = val as Grade;
+                            if(gradeTmp != null)
                             {
-                                int count = curtmp.Students.Count;
+                                int count = gradeTmp.Students.Count;
                                 Console.WriteLine("Grade: " + val.Name + " Amount of Students: " + count);
                             }
                             break;
@@ -185,15 +185,13 @@ namespace CoreEscuela.App
 
         private void LoadExams()
         {
-            
+            var rnd = new Random();
             foreach (var grade in School.Grades)
             {
                 foreach (var course in grade.Courses)
                 {
                     foreach (var student in grade.Students)
-                    {
-                        var rnd = new Random();
-                        
+                    {                        
                         for (int i = 0; i < 5; i++)
                         {
                             var ev = new Exam
