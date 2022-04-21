@@ -9,7 +9,8 @@ engine.Inicialize();
 Printer.WriteTitle("Welcome to the School!");
 Console.WriteLine(engine.School);
 
-engine.School.CleanPlace(); 
+#region test methods
+/* engine.School.CleanPlace(); 
 
 var objectList = engine.GetSchoolObjects(
     out int countExams,
@@ -21,6 +22,16 @@ var objectList = engine.GetSchoolObjects(
 var objetDict = engine.GetObjetDict();
 
 engine.PrintDictionary(objetDict);
+
+Console.ReadLine(); */
+
+#endregion
+
+var report = new Reports(engine.GetObjetDict());
+var examsList = report.getExamsList();
+var coursesList = report.GetCoursesList();
+var listExamsXCourse = report.GetDicExamXCourse();
+var listAverageXCourse = report.GetAvgStudXCourse();
 
 Console.ReadLine();
 
