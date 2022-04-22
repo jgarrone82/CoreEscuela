@@ -58,8 +58,8 @@ namespace CoreEscuela.App
             foreach (var course in courseList)
             {
                 var examsCourse = from exam in examList
-                                where exam.Course.Name == course
-                                select exam;
+                                  where exam.Course.Name == course
+                                  select exam;
 
                 ansDict.Add(course, examsCourse);
             }
@@ -67,26 +67,46 @@ namespace CoreEscuela.App
             return ansDict;
         }
 
-        public Dictionary<string, IEnumerable<object>> GetAvgStudXCourse()
+        public Dictionary<string, IEnumerable<AverageStudent>> GetAvgStudXCourse()
         {
-            var ansDict = new Dictionary<string, IEnumerable<object>>();
+            var ansDict = new Dictionary<string, IEnumerable<AverageStudent>>();
             var DicExamXCourse = GetDicExamXCourse();
 
             foreach (var courseWithExam in DicExamXCourse)
             {
                 var studentsAverage = from eval in courseWithExam.Value
-                            group eval by new{
-                                 eval.Student.UniqueId,
-                                 eval.Student.Name}
+                                      group eval by new
+                                      {
+                                          eval.Student.UniqueId,
+                                          eval.Student.Name
+                                      }
                             into groupExamsStudent
-                            select new AverageStudent
-                            { 
-                                idStudent = groupExamsStudent.Key.UniqueId,
-                                StudentName = groupExamsStudent.Key.Name,
-                                average = groupExamsStudent.Average(exam => exam.Note)
-                            };
-                 
-                 ansDict.Add(courseWithExam.Key, studentsAverage);           
+                                      select new AverageStudent
+                                      {
+                                          idStudent = groupExamsStudent.Key.UniqueId,
+                                          StudentName = groupExamsStudent.Key.Name,
+                                          average = MathF.Round(groupExamsStudent.Average(exam => exam.Note),2)
+                                      };
+
+                ansDict.Add(courseWithExam.Key, studentsAverage);
+            }
+
+            return ansDict;
+        }
+
+        public Dictionary<string, IEnumerable<AverageStudent>> GetBestAvgStudXCourse(int amount)
+        {
+            var ansDict = new Dictionary<string, IEnumerable<AverageStudent>>();
+            var DicAvgStudXCourse = GetAvgStudXCourse();
+
+            foreach (var result in DicAvgStudXCourse)
+            {
+                var student = (from eval in result.Value.Cast<AverageStudent>()
+                               orderby eval.average descending
+                               select eval
+                ).Take(amount);
+
+                ansDict.Add(result.Key, student);
             }
 
             return ansDict;

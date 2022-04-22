@@ -28,7 +28,7 @@ namespace CoreEscuela.Util
         {
             while (amount-- > 0)
             {
-                //System.Console.Beep(hz, time);
+                System.Console.Beep(hz, time);
             }
         }
     }
